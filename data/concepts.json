@@ -1,0 +1,110 @@
+[
+  {
+    "topicID": 101,
+    "title": "Classes and Objects",
+    "category": "C# Fundamentals",
+    "definition": "A class is a blueprint for creating objects, defining properties and methods that objects of that type will have.",
+    "detailedExplanation": "Classes in C# are reference types that encapsulate data (fields) and behavior (methods). They serve as templates for creating objects (instances). Classes support inheritance, encapsulation, and polymorphism, making them fundamental to object-oriented programming.",
+    "codeExample": "public class Person\n{\n    public string Name { get; set; }\n    public int Age { get; set; }\n\n    public void Introduce()\n    {\n        Console.WriteLine($\"Hi, I'm {Name} and I'm {Age} years old.\");\n    }\n}\n\n// Usage\nPerson person = new Person();\nperson.Name = \"John\";\nperson.Age = 30;\nperson.Introduce();",
+    "keywords": ["class", "object", "instance", "blueprint", "reference type", "new", "constructor"]
+  },
+  {
+    "topicID": 102,
+    "title": "Inheritance",
+    "category": "OOP",
+    "definition": "Inheritance allows a class to inherit properties and methods from another class, establishing an 'is-a' relationship.",
+    "detailedExplanation": "Inheritance is one of the four pillars of OOP. It enables code reuse and establishes hierarchical relationships between classes. The derived class (child) inherits from the base class (parent) and can override or extend its functionality. C# supports single inheritance for classes.",
+    "codeExample": "public class Animal\n{\n    public virtual void MakeSound()\n    {\n        Console.WriteLine(\"Some generic animal sound\");\n    }\n}\n\npublic class Dog : Animal\n{\n    public override void MakeSound()\n    {\n        Console.WriteLine(\"Woof!\");\n    }\n\n    public void Fetch()\n    {\n        Console.WriteLine(\"Fetching the ball!\");\n    }\n}",
+    "keywords": ["inheritance", "base class", "derived class", "parent", "child", "is-a", "virtual", "override", "extends"]
+  },
+  {
+    "topicID": 103,
+    "title": "Encapsulation",
+    "category": "OOP",
+    "definition": "Encapsulation is the bundling of data and methods that operate on that data within a single unit, while hiding internal implementation details.",
+    "detailedExplanation": "Encapsulation promotes data security and code maintainability by controlling access to class members through access modifiers (private, public, protected, internal). It allows you to expose only what's necessary and hide implementation details, making your code more robust and easier to maintain.",
+    "codeExample": "public class BankAccount\n{\n    private decimal _balance; // Private field\n\n    public decimal Balance // Public property\n    {\n        get { return _balance; }\n        private set { _balance = value; }\n    }\n\n    public void Deposit(decimal amount)\n    {\n        if (amount > 0)\n            _balance += amount;\n    }\n\n    public bool Withdraw(decimal amount)\n    {\n        if (amount > 0 && amount <= _balance)\n        {\n            _balance -= amount;\n            return true;\n        }\n        return false;\n    }\n}",
+    "keywords": ["encapsulation", "data hiding", "private", "public", "protected", "access modifiers", "properties", "getters", "setters"]
+  },
+  {
+    "topicID": 104,
+    "title": "Polymorphism",
+    "category": "OOP",
+    "definition": "Polymorphism allows objects of different types to be treated as instances of the same type through a common interface.",
+    "detailedExplanation": "Polymorphism enables a single interface to represent different underlying forms (data types). In C#, this is achieved through method overriding (runtime polymorphism) and method overloading (compile-time polymorphism). It allows for flexible and extensible code design.",
+    "codeExample": "public abstract class Shape\n{\n    public abstract double CalculateArea();\n}\n\npublic class Circle : Shape\n{\n    public double Radius { get; set; }\n\n    public override double CalculateArea()\n    {\n        return Math.PI * Radius * Radius;\n    }\n}\n\npublic class Rectangle : Shape\n{\n    public double Width { get; set; }\n    public double Height { get; set; }\n\n    public override double CalculateArea()\n    {\n        return Width * Height;\n    }\n}\n\n// Usage\nShape[] shapes = { new Circle { Radius = 5 }, new Rectangle { Width = 4, Height = 6 } };\nforeach (Shape shape in shapes)\n{\n    Console.WriteLine($\"Area: {shape.CalculateArea()}\");\n}",
+    "keywords": ["polymorphism", "abstract", "virtual", "override", "interface", "runtime polymorphism", "compile-time polymorphism", "method overloading"]
+  },
+  {
+    "topicID": 105,
+    "title": "Single Responsibility Principle",
+    "category": "SOLID",
+    "definition": "A class should have only one reason to change, meaning it should have only one job or responsibility.",
+    "detailedExplanation": "SRP states that every class should be responsible for a single part of the functionality provided by the software. This makes the code more maintainable, testable, and flexible. When a class has multiple responsibilities, changes to one responsibility can affect the others, leading to fragile code.",
+    "codeExample": "// Bad - Multiple responsibilities\npublic class User\n{\n    public string Name { get; set; }\n    public string Email { get; set; }\n\n    public void SaveToDatabase() { /* database logic */ }\n    public void SendEmail() { /* email logic */ }\n    public bool ValidateEmail() { /* validation logic */ }\n}\n\n// Good - Single responsibility\npublic class User\n{\n    public string Name { get; set; }\n    public string Email { get; set; }\n}\n\npublic class UserRepository\n{\n    public void Save(User user) { /* database logic */ }\n}\n\npublic class EmailService\n{\n    public void SendEmail(User user) { /* email logic */ }\n}\n\npublic class EmailValidator\n{\n    public bool IsValid(string email) { /* validation logic */ }\n}",
+    "keywords": ["SRP", "single responsibility", "separation of concerns", "maintainability", "testability", "cohesion"]
+  },
+  {
+    "topicID": 106,
+    "title": "Open/Closed Principle",
+    "category": "SOLID",
+    "definition": "Software entities should be open for extension but closed for modification.",
+    "detailedExplanation": "OCP suggests that you should be able to extend a class's behavior without modifying its source code. This is typically achieved through inheritance, interfaces, and composition. The principle helps maintain stability in existing code while allowing for new functionality.",
+    "codeExample": "// Closed for modification, open for extension\npublic abstract class PaymentProcessor\n{\n    public abstract void ProcessPayment(decimal amount);\n}\n\npublic class CreditCardProcessor : PaymentProcessor\n{\n    public override void ProcessPayment(decimal amount)\n    {\n        Console.WriteLine($\"Processing ${amount} via Credit Card\");\n    }\n}\n\npublic class PayPalProcessor : PaymentProcessor\n{\n    public override void ProcessPayment(decimal amount)\n    {\n        Console.WriteLine($\"Processing ${amount} via PayPal\");\n    }\n}\n\n// New payment method can be added without modifying existing code\npublic class BitcoinProcessor : PaymentProcessor\n{\n    public override void ProcessPayment(decimal amount)\n    {\n        Console.WriteLine($\"Processing ${amount} via Bitcoin\");\n    }\n}",
+    "keywords": ["OCP", "open closed", "extension", "modification", "inheritance", "interfaces", "abstract", "polymorphism"]
+  },
+  {
+    "topicID": 107,
+    "title": "Dependency Inversion Principle",
+    "category": "SOLID",
+    "definition": "High-level modules should not depend on low-level modules. Both should depend on abstractions.",
+    "detailedExplanation": "DIP suggests that dependencies should be on abstractions (interfaces) rather than concrete implementations. This reduces coupling between classes and makes the system more flexible and testable. It's often implemented using dependency injection.",
+    "codeExample": "// Bad - High-level depends on low-level\npublic class OrderService\n{\n    private EmailService _emailService = new EmailService();\n\n    public void ProcessOrder(Order order)\n    {\n        // Process order logic\n        _emailService.SendConfirmation(order.Email);\n    }\n}\n\n// Good - Depend on abstraction\npublic interface IEmailService\n{\n    void SendConfirmation(string email);\n}\n\npublic class OrderService\n{\n    private readonly IEmailService _emailService;\n\n    public OrderService(IEmailService emailService)\n    {\n        _emailService = emailService;\n    }\n\n    public void ProcessOrder(Order order)\n    {\n        // Process order logic\n        _emailService.SendConfirmation(order.Email);\n    }\n}\n\npublic class EmailService : IEmailService\n{\n    public void SendConfirmation(string email)\n    {\n        // Email implementation\n    }\n}",
+    "keywords": ["DIP", "dependency inversion", "abstractions", "interfaces", "dependency injection", "high-level", "low-level", "coupling"]
+  },
+  {
+    "topicID": 108,
+    "title": "Singleton Pattern",
+    "category": "Design Patterns",
+    "definition": "Ensures a class has only one instance and provides global access to that instance.",
+    "detailedExplanation": "The Singleton pattern restricts instantiation of a class to a single object. It's useful when exactly one object is needed to coordinate actions across the system, such as logging, driver objects, caching, or thread pools. However, it should be used sparingly as it can make testing difficult.",
+    "codeExample": "public sealed class Singleton\n{\n    private static readonly Lazy<Singleton> _instance = new Lazy<Singleton>(() => new Singleton());\n    \n    private Singleton() { }\n    \n    public static Singleton Instance => _instance.Value;\n    \n    public void DoSomething()\n    {\n        Console.WriteLine(\"Doing something...\");\n    }\n}\n\n// Usage\nSingleton.Instance.DoSomething();\n\n// Thread-safe alternative using lock\npublic sealed class ThreadSafeSingleton\n{\n    private static ThreadSafeSingleton _instance;\n    private static readonly object _lock = new object();\n    \n    private ThreadSafeSingleton() { }\n    \n    public static ThreadSafeSingleton Instance\n    {\n        get\n        {\n            if (_instance == null)\n            {\n                lock (_lock)\n                {\n                    if (_instance == null)\n                        _instance = new ThreadSafeSingleton();\n                }\n            }\n            return _instance;\n        }\n    }\n}",
+    "keywords": ["singleton", "single instance", "global access", "lazy initialization", "thread-safe", "design pattern"]
+  },
+  {
+    "topicID": 109,
+    "title": "Garbage Collection",
+    "category": ".NET Concepts",
+    "definition": "Automatic memory management in .NET that reclaims memory used by objects that are no longer reachable.",
+    "detailedExplanation": "The .NET Garbage Collector automatically manages memory allocation and deallocation. It works in generations (0, 1, 2) and uses mark-and-sweep algorithm. Objects that survive collection are promoted to higher generations. GC helps prevent memory leaks but can impact performance during collection cycles.",
+    "codeExample": "public class GCExample\n{\n    public void DemonstrateGC()\n    {\n        // Create objects\n        var list = new List<string>();\n        for (int i = 0; i < 1000; i++)\n        {\n            list.Add($\"Item {i}\");\n        }\n        \n        // Check memory before cleanup\n        long memoryBefore = GC.GetTotalMemory(false);\n        Console.WriteLine($\"Memory before: {memoryBefore} bytes\");\n        \n        // Remove reference\n        list = null;\n        \n        // Force garbage collection (not recommended in production)\n        GC.Collect();\n        GC.WaitForPendingFinalizers();\n        GC.Collect();\n        \n        long memoryAfter = GC.GetTotalMemory(false);\n        Console.WriteLine($\"Memory after: {memoryAfter} bytes\");\n    }\n}\n\n// Implementing IDisposable for unmanaged resources\npublic class ResourceManager : IDisposable\n{\n    private bool _disposed = false;\n    \n    public void Dispose()\n    {\n        Dispose(true);\n        GC.SuppressFinalize(this);\n    }\n    \n    protected virtual void Dispose(bool disposing)\n    {\n        if (!_disposed)\n        {\n            if (disposing)\n            {\n                // Dispose managed resources\n            }\n            // Dispose unmanaged resources\n            _disposed = true;\n        }\n    }\n}",
+    "keywords": ["garbage collection", "GC", "memory management", "generations", "mark and sweep", "IDisposable", "finalize", "automatic"]
+  },
+  {
+    "topicID": 110,
+    "title": "LINQ",
+    "category": ".NET Concepts",
+    "definition": "Language Integrated Query provides a consistent way to query different data sources using C# syntax.",
+    "detailedExplanation": "LINQ enables developers to write queries directly in C# against various data sources like collections, databases, XML, etc. It provides both method syntax and query syntax, making data manipulation more readable and maintainable. LINQ uses deferred execution for better performance.",
+    "codeExample": "public class LinqExample\n{\n    public void DemonstrateLinq()\n    {\n        var numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };\n        \n        // Method syntax\n        var evenNumbers = numbers\n            .Where(n => n % 2 == 0)\n            .Select(n => n * 2)\n            .OrderByDescending(n => n)\n            .ToList();\n        \n        // Query syntax\n        var queryResult = (from n in numbers\n                          where n % 2 == 0\n                          orderby n descending\n                          select n * 2).ToList();\n        \n        // Complex example with objects\n        var people = new List<Person>\n        {\n            new Person { Name = \"John\", Age = 25, City = \"New York\" },\n            new Person { Name = \"Jane\", Age = 30, City = \"London\" },\n            new Person { Name = \"Bob\", Age = 35, City = \"New York\" }\n        };\n        \n        var result = people\n            .Where(p => p.Age > 25)\n            .GroupBy(p => p.City)\n            .Select(g => new { City = g.Key, Count = g.Count(), AvgAge = g.Average(p => p.Age) })\n            .ToList();\n    }\n}",
+    "keywords": ["LINQ", "query", "where", "select", "orderby", "groupby", "deferred execution", "method syntax", "query syntax"]
+  },
+  {
+    "topicID": 111,
+    "title": "Async/Await",
+    "category": "C# Fundamentals",
+    "definition": "Async/await pattern enables asynchronous programming, allowing non-blocking execution of long-running operations.",
+    "detailedExplanation": "The async/await pattern in C# simplifies asynchronous programming by allowing you to write asynchronous code that looks like synchronous code. It's built on top of the Task Parallel Library and helps prevent UI freezing and improves application responsiveness.",
+    "codeExample": "public class AsyncExample\n{\n    // Async method returning Task\n    public async Task<string> FetchDataAsync(string url)\n    {\n        using var httpClient = new HttpClient();\n        \n        try\n        {\n            string result = await httpClient.GetStringAsync(url);\n            return result;\n        }\n        catch (HttpRequestException ex)\n        {\n            Console.WriteLine($\"Error fetching data: {ex.Message}\");\n            return string.Empty;\n        }\n    }\n    \n    // Async void should only be used for event handlers\n    public async void Button_Click(object sender, EventArgs e)\n    {\n        string data = await FetchDataAsync(\"https://api.example.com/data\");\n        // Update UI with data\n    }\n    \n    // Multiple async operations\n    public async Task<List<string>> FetchMultipleDataAsync(string[] urls)\n    {\n        var tasks = urls.Select(url => FetchDataAsync(url));\n        string[] results = await Task.WhenAll(tasks);\n        return results.ToList();\n    }\n    \n    // ConfigureAwait for library code\n    public async Task<string> LibraryMethodAsync()\n    {\n        var result = await SomeAsyncOperation().ConfigureAwait(false);\n        return result.ToUpper();\n    }\n    \n    private async Task<string> SomeAsyncOperation()\n    {\n        await Task.Delay(1000);\n        return \"Hello\";\n    }\n}",
+    "keywords": ["async", "await", "Task", "asynchronous", "non-blocking", "ConfigureAwait", "Task.WhenAll", "responsiveness"]
+  },
+  {
+    "topicID": 112,
+    "title": "Interface Segregation Principle",
+    "category": "SOLID",
+    "definition": "Clients should not be forced to depend on interfaces they do not use.",
+    "detailedExplanation": "ISP suggests that larger interfaces should be split into smaller, more specific ones so that clients only need to know about the methods that are of interest to them. This reduces the impact of changes and makes the system more modular and easier to understand.",
+    "codeExample": "// Bad - Fat interface\npublic interface IWorker\n{\n    void Work();\n    void Eat();\n    void Sleep();\n}\n\npublic class Human : IWorker\n{\n    public void Work() { Console.WriteLine(\"Human working\"); }\n    public void Eat() { Console.WriteLine(\"Human eating\"); }\n    public void Sleep() { Console.WriteLine(\"Human sleeping\"); }\n}\n\npublic class Robot : IWorker\n{\n    public void Work() { Console.WriteLine(\"Robot working\"); }\n    public void Eat() { throw new NotImplementedException(); } // Robot doesn't eat!\n    public void Sleep() { throw new NotImplementedException(); } // Robot doesn't sleep!\n}\n\n// Good - Segregated interfaces\npublic interface IWorkable\n{\n    void Work();\n}\n\npublic interface IFeedable\n{\n    void Eat();\n}\n\npublic interface ISleepable\n{\n    void Sleep();\n}\n\npublic class Human : IWorkable, IFeedable, ISleepable\n{\n    public void Work() { Console.WriteLine(\"Human working\"); }\n    public void Eat() { Console.WriteLine(\"Human eating\"); }\n    public void Sleep() { Console.WriteLine(\"Human sleeping\"); }\n}\n\npublic class Robot : IWorkable\n{\n    public void Work() { Console.WriteLine(\"Robot working\"); }\n}",
+    "keywords": ["ISP", "interface segregation", "fat interface", "specific interfaces", "client dependencies", "modular"]
+  }
+]
