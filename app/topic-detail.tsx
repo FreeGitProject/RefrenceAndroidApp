@@ -3,9 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft, Star, Copy, Share2 } from 'lucide-react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-   //import { Light as SyntaxHighlighter, dark as atomOneDark } from 'react-native-syntax-highlighter';
-  // @ts-ignore
-import {  SyntaxHighlighter, atomOneDark } from 'react-native-syntax-highlighter';
+import SyntaxHighlighter, { atomOneDark } from 'react-native-syntax-highlighter';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
